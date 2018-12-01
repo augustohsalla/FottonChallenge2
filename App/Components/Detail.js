@@ -14,19 +14,7 @@ import BookPages from './Books/BookPages';
 export default class Detail extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			book:
-				{
-					id: '01',
-					title: "Titulo do livro",
-					description: 'Descriçõao do livro',
-					pages: '216',
-					author: 'David Airey',
-					price: '9,99',
-					rate: '3.5',
-					img: 'https://s3-alpha.figma.com/img/e2cd/e885/223c346752c4ccce3f2f718ef143d42d'
-				}
-		}
+
 	}
 	static navigationOptions = ({ navigation }) => {
 		return {
@@ -34,7 +22,6 @@ export default class Detail extends Component {
 			headerTitle: ('Design Books'),
 			headerRight: (<Icon color="#2C2605" name='search' />),
 			headerLeft: (
-				// <HeaderBackButton onPress={() => navigation.goBack(null)} />
 				<Icon color="#2C2605" name='keyboard-backspace' onPress={() => navigation.goBack(null)} />
 			),
 
@@ -47,42 +34,37 @@ export default class Detail extends Component {
 
 	render() {
 
-		const book = this.props.navigation.getParam('book');
+		let book = this.props.navigation.getParam('book');
 
+		debugger;
 		if (!book) {
 			return (
 				<View />
 			);
 		}
-		const { title, description, img, pages, price, author, rate } = book;
+		book = book.volumeInfo;
+		const { title, description, imageLinks, pageCount, price = "9,99", authors, maturityRating } = book;
 
 		return (
 			<View style={styles.container}>
-
-
 				<View style={styles.bookHeader}>
-
 					<View style={{}}>
-						<Image style={{ width: 100, height: 130 }} source={{ uri: img }} />
+						<Image style={{ width: 100, height: 130 }} source={{ uri: imageLinks.smallThumbnail }} />
 					</View>
 
 					<View style={{ marginLeft: 23 }}>
 						<BookDescription title={title} />
-						<BookAuthor author={author} style={{ flex: 1 }} />
+						<BookAuthor author={authors} style={{ flex: 1 }} />
 
-						<BookPriceRate book={{ price, rate }} style={{ flex: 1 }} />
+						<BookPriceRate book={{ price, maturityRating }} style={{ flex: 1 }} />
 					</View>
-
-
 				</View>
-
 
 				<View style={styles.bookShop}>
-					<BookPages pages={pages} style={{ marginLeft: 36 }} />
+					<BookPages pages={pageCount} style={{ marginLeft: 36 }} />
 					<BookShop />
 				</View>
-				<Text style={styles.text}>Since timemam sm aing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more ring and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more ring and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more r</Text>
-
+				<Text style={styles.text}>{description}</Text>
 			</View >
 		);
 	}

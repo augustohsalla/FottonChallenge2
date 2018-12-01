@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
         color: '#2C2605',
         textAlign: 'left',
         fontSize: 20,
-        fontFamily: 'Roboto'
+        fontFamily: 'Roboto',
+        width: 210
     }
 });

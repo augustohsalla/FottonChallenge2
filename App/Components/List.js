@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import BookList from './BookList'
+import { connect } from 'react-redux';
 
 export default class List extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -9,7 +10,7 @@ export default class List extends Component {
             headerStyle: styles.header,
             headerTitle: ('Design Books'),
             headerRight: (<Icon color="#2C2605" name='search' />),
-            headerLeft: (<Icon color="#2C2605" name='menu' />),
+            headerLeft: (<Icon color="#2C2605" name='menu' onPress={() => navigation.goBack(null)} />),
             headerTitleStyle: styles.headerTitle,
             headerLeftContainerStyle: styles.headerMenu,
             headerRightContainerStyle: styles.headerSearch,
@@ -17,13 +18,15 @@ export default class List extends Component {
     };
 
     render() {
+        const books = this.props.navigation.getParam('books');
+
         return (
             <View style={styles.container}>
                 <StatusBar
                     barStyle='dark-content'
                     backgroundColor='#FFDD0D'
                 />
-                <BookList navigation={this.props.navigation} />
+                <BookList books={books} navigation={this.props.navigation} />
             </View >
         );
     }
@@ -32,8 +35,9 @@ export default class List extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         backgroundColor: '#FFDD0D',
+        flexDirection: 'row',
+        flexWrap: 'wrap'
     },
     header: {
         backgroundColor: '#FFDD0D'
@@ -56,6 +60,3 @@ const styles = StyleSheet.create({
         borderBottomColor: '#F0D10F'
     }
 });
-
-
-
